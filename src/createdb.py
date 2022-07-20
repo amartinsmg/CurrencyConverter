@@ -14,13 +14,12 @@ def main():
 		name TEXT
 	);''')
 	query = "INSERT INTO currencies_table(code, name) VALUES('{}', '{}');"
-	response = requests.post('https://openexchangerates.org/api/currencies.json')
+	response = requests.get('https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json')
 	currencies = response.json()
 
 	for currency in currencies:
-		if currency != 'VEF':
-			current_query = query.format(currency, currencies[currency].replace("\'", ''))
-			cur.execute(current_query)
+		current_query = query.format(currency, currencies[currency])
+		cur.execute(current_query)
 
 	db.commit()
 
