@@ -9,12 +9,23 @@ db = sqlite3.connect(f'{db_path}/currencies.db')
 cur = db.cursor()
 
 
-def currency_exchange(input_currency, output_currency):
+def currency_exchange_rate(input_currency: str, output_currency: str):
     response = requests.get(
         f'https://economia.awesomeapi.com.br/json/last/{input_currency}-{output_currency}'
     )
-    response_dict = response.json()
-    return float(response_dict["ask"])
+    if response.ok:
+        rate = response.json()[(input_currency +
+                                output_currency).upper()]['ask']
+    else:
+        response = requests.get(
+            f'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies/{input_currency}/{output_currency}.json'
+        )
+        if response.ok:
+            rate = response.json()[output_currency.lower()]
+        else:
+            raise Exception('Request error')
+
+    return float(rate)
 
 
 class Root(Tk):
@@ -32,9 +43,13 @@ class Root(Tk):
         frame = Frame(self)
         frame.pack(expand=True)
         l1 = Label(frame, text='Convert from: ', font=font, justify='left')
-        e1 = AutocompleteCombobox(frame, completevalues=currencies_names, font=font)
+        e1 = AutocompleteCombobox(frame,
+                                  completevalues=currencies_names,
+                                  font=font)
         l2 = Label(frame, text='To: ', font=font, justify='left')
-        e2 = AutocompleteCombobox(frame, completevalues=currencies_names, font=font)
+        e2 = AutocompleteCombobox(frame,
+                                  completevalues=currencies_names,
+                                  font=font)
         l3 = Label(frame, text='Value: ', font=font, justify='left')
         btn = Button(frame, text='Calculate', font=font, bg='#b3b3b3')
         e3 = Entry(frame, font=font)
@@ -53,5 +68,5 @@ class Root(Tk):
 
 window = Root()
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     window.mainloop()

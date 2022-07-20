@@ -18,8 +18,9 @@ def main():
 	currencies = response.json()
 
 	for currency in currencies:
-		current_query = query.format(currency, currencies[currency].replace("\'", ''))
-		cur.execute(current_query)
+		if currency != 'VEF':
+			current_query = query.format(currency, currencies[currency].replace("\'", ''))
+			cur.execute(current_query)
 
 	db.commit()
 
