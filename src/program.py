@@ -10,7 +10,7 @@ class Program(Tk):
 
     def __init__(self):
         super(Program, self).__init__()
-        self.title("Currency Coverter")
+        self.title('Currency Coverter')
         self.minsize(600, 450)
         def_font = tkFont.nametofont('TkDefaultFont')
         def_font.config(size=13)
@@ -38,13 +38,13 @@ class Program(Tk):
         e2 = AutocompleteCombobox(frame,
                                   textvariable=self.output_currency,
                                   completevalues=currencies_names)
-        l3 = Label(frame, text='Value: ')
+        l3 = Label(frame, text='Amount: ')
         btn = Button(frame,
                      text='Calculate',
                      bg='#b3b3b3',
                      command=self.calculate)
         e3 = Entry(frame, textvariable=self.input)
-        l4 = Label(frame, text='Result: ', font=(def_font.name, 13, 'bold'))
+        l4 = Label(frame, text='Resulting amount: ', font=(def_font.name, 13, 'bold'))
         self.result = Label(frame)
         l1.grid(row=0, column=0, pady=4)
         e1.grid(row=0, column=1, ipadx=2, ipady=2, pady=4)
