@@ -1,9 +1,8 @@
-from tkinter.ttk import Combobox
 import requests
 import sqlite3
 from os import path
 from tkinter import Button, Entry, Frame, Label, Tk
-from ttkwidgets.autocomplete import AutocompleteEntry
+from ttkwidgets.autocomplete import AutocompleteCombobox
 
 db_path = f'{path.dirname(__file__)}/../db/'
 db = sqlite3.connect(f'{db_path}/currencies.db')
@@ -33,17 +32,14 @@ class Root(Tk):
         frame = Frame(self)
         frame.pack(expand=True)
         l1 = Label(frame, text='Convert from: ', font=font, justify='left')
-        e1 = AutocompleteEntry(frame, completevalues=currencies_names, font=font)
+        e1 = AutocompleteCombobox(frame, completevalues=currencies_names, font=font)
         l2 = Label(frame, text='To: ', font=font, justify='left')
-        e2 = AutocompleteEntry(frame, completevalues=currencies_names, font=font)
+        e2 = AutocompleteCombobox(frame, completevalues=currencies_names, font=font)
         l3 = Label(frame, text='Value: ', font=font, justify='left')
         btn = Button(frame, text='Calculate', font=font, bg='#b3b3b3')
         e3 = Entry(frame, font=font)
         l4 = Label(frame, text='Result: ', font=font)
         result = Label(frame, font=font)
-        
-        result['text'] = str(5 + 5)
-        result['text'] = str(5 + 7)
         l1.grid(row=0, column=0, pady=4)
         e1.grid(row=0, column=1, ipadx=2, ipady=2, pady=4)
         l2.grid(row=1, column=0, pady=4)
