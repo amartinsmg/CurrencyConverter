@@ -8,6 +8,8 @@ from ttkwidgets.autocomplete import AutocompleteCombobox
 
 class Program(Tk):
 
+    # This function creates the graphical interface of the program
+
     def __init__(self):
         super(Program, self).__init__()
         self.title('Currency Coverter')
@@ -15,7 +17,7 @@ class Program(Tk):
         def_font = tkFont.nametofont('TkDefaultFont')
         def_font.config(size=13)
         self.option_add('*Font', def_font)
-        db_path = path.join(path.abspath('.'), 'currencies.db')
+        db_path = path.join(path.dirname(__file__), 'currencies.db')
         db = sqlite3.connect(db_path)
         self.cur = db.cursor()
         try:
@@ -44,8 +46,10 @@ class Program(Tk):
                      bg='#b3b3b3',
                      command=self.calculate)
         e3 = Entry(frame, textvariable=self.input)
-        l4 = Label(frame, text='Resulting amount: ', font=(def_font.name, 13, 'bold'))
-        self.result = Label(frame)
+        l4 = Label(frame,
+                   text='Resulting amount: ',
+                   font=(def_font.name, 13, 'bold'))
+        self.output = Label(frame)
         l1.grid(row=0, column=0, pady=4)
         e1.grid(row=0, column=1, ipadx=2, ipady=2, pady=4)
         l2.grid(row=1, column=0, pady=4)
@@ -54,7 +58,10 @@ class Program(Tk):
         e3.grid(row=2, column=1, ipadx=2, ipady=2, pady=4)
         btn.grid(row=3, column=1, pady=(15, 4))
         l4.grid(row=4, column=0, pady=(25, 4))
-        self.result.grid(row=4, column=1, pady=(25, 4))
+        self.output.grid(row=4, column=1, pady=(25, 4))
+
+    # This function queries an API for the exchange rate between two currencies
+    # And, if the API returns an error, it queries another
 
     def currency_exchange_rate(self, input_currency: str,
                                output_currency: str):
@@ -74,6 +81,8 @@ class Program(Tk):
                 raise Exception('Request error')
         return float(rate)
 
+    # This function gets the exchange rate and calculates the resulting amount
+
     def calculate(self):
         input_currency_name = self.input_currency.get()
         output_currency_name = self.output_currency.get()
@@ -88,10 +97,10 @@ class Program(Tk):
         input = float(self.input.get())
         try:
             rate = self.currency_exchange_rate(input_currency, output_currency)
-            output = f'{(input * rate):.2f}'
+            result = str(input * rate)
         except Exception as e:
-            output = str(e)
-        self.result['text'] = output
+            result = str(e)
+        self.output['text'] = result
 
 
 window = Program()

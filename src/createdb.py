@@ -1,7 +1,7 @@
-from os import path
 import requests
 import sqlite3
 
+# This function creates a database to store the names and codes of the currencies.
 
 def main(db_path: str):
     db = sqlite3.connect(db_path)
@@ -22,7 +22,3 @@ def main(db_path: str):
         cur.execute(current_query)
 
     db.commit()
-
-
-if __name__ == '__main__':
-    main(path.join(path.abspath('.'), 'currencies.db'))
