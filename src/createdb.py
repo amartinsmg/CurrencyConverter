@@ -4,8 +4,8 @@ import sqlite3
 # This function creates a database to store the names and codes of the currencies.
 
 def main(db_path: str):
-    db = sqlite3.connect(db_path)
-    cur = db.cursor()
+    conn = sqlite3.connect(db_path)
+    cur = conn.cursor()
     cur.execute('''CREATE TABLE currencies_table(
         id   INTEGER PRIMARY KEY AUTOINCREMENT,
         code TEXT NOT NULL,
@@ -21,4 +21,5 @@ def main(db_path: str):
         current_query = query.format(currency, currencies[currency])
         cur.execute(current_query)
 
-    db.commit()
+    conn.commit()
+    conn.close()

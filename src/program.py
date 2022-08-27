@@ -18,8 +18,8 @@ class Program(Tk):
         def_font.config(size=13)
         self.option_add('*Font', def_font)
         db_path = path.join(path.dirname(__file__), 'currencies.db')
-        db = sqlite3.connect(db_path)
-        self.cur = db.cursor()
+        self.conn = sqlite3.connect(db_path)
+        self.cur = self.conn.cursor()
         try:
             self.cur.execute('SELECT name FROM currencies_table')
         except:
@@ -102,8 +102,14 @@ class Program(Tk):
             result = str(e)
         self.output['text'] = result
 
+    # This function closes the connection with the database
+    
+    def close_conn(self):
+        self.conn.close()
+
 
 window = Program()
 
 if __name__ == '__main__':
     window.mainloop()
+    window.close_conn()
