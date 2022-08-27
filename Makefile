@@ -4,4 +4,4 @@ compile:
 	pyinstaller program.spec
 
 clean:
-	rm build/* dist/*
+	rm -rf build/* dist/*
