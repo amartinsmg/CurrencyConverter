@@ -6,12 +6,12 @@ import sqlite3
 def main(db_path: str):
     conn = sqlite3.connect(db_path)
     cur = conn.cursor()
-    cur.execute('''CREATE TABLE currencies_table(
+    cur.execute('''CREATE TABLE tb_currencies(
         id   INTEGER PRIMARY KEY AUTOINCREMENT,
         code TEXT NOT NULL,
         name TEXT NOT NULL
     );''')
-    query = "INSERT INTO currencies_table(code, name) VALUES('{}', '{}');"
+    query = "INSERT INTO tb_currencies(code, name) VALUES('{}', '{}');"
     response = requests.get(
         'https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json'
     )
