@@ -9,4 +9,4 @@ To compile the program, you can use the bellow command. Then the executable file
 ````
 make
 ````
-<sup>**Note:** Make sure you have python3 and all modules installed</sup>
+<sup>**Note:** Make sure you have Python 3, PyInstaller and all modules installed</sup>
