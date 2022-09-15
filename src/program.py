@@ -21,10 +21,10 @@ class Program(Tk):
         self.conn = sqlite3.connect(db_path)
         self.cur = self.conn.cursor()
         try:
-            self.cur.execute('SELECT name FROM currencies_table')
+            self.cur.execute('SELECT name FROM tb_currencies')
         except:
             createdb(db_path)
-            self.cur.execute('SELECT name FROM currencies_table')
+            self.cur.execute('SELECT name FROM tb_currencies')
         dabase_rows = self.cur.fetchall()
         currencies_names = [row[0] for row in dabase_rows]
         frame = Frame(self)
@@ -87,11 +87,11 @@ class Program(Tk):
         input_currency_name = self.input_currency.get()
         output_currency_name = self.output_currency.get()
         self.cur.execute(
-            f"SELECT code FROM currencies_table WHERE name LIKE '{input_currency_name}'"
+            f"SELECT code FROM tb_currencies WHERE name LIKE '{input_currency_name}'"
         )
         input_currency = self.cur.fetchall()[0][0]
         self.cur.execute(
-            f"SELECT code FROM currencies_table WHERE name LIKE '{output_currency_name}'"
+            f"SELECT code FROM tb_currencies WHERE name LIKE '{output_currency_name}'"
         )
         output_currency = self.cur.fetchall()[0][0]
         input = float(self.input.get())
