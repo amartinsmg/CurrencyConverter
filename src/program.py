@@ -6,12 +6,12 @@ from tkinter import Button, Entry, font as tkFont, Frame, Label, StringVar, Tk
 from ttkwidgets.autocomplete import AutocompleteCombobox
 
 
-class Program(Tk):
+class Converter(Tk):
 
     # This function creates the graphical interface of the program
 
     def __init__(self):
-        super(Program, self).__init__()
+        super(Converter, self).__init__()
         self.title('Currency Coverter')
         self.minsize(600, 450)
         def_font = tkFont.nametofont('TkDefaultFont')
@@ -108,8 +108,8 @@ class Program(Tk):
         self.conn.close()
 
 
-window = Program()
 
 if __name__ == '__main__':
+    window = Converter()
     window.mainloop()
     window.close_conn()
